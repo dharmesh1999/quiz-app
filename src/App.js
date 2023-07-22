@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import LandingPage from './components/landing-page/LandingPage';
 import fetchQuestion from '../src/utils/api/QuestionApi';
-// import fetchLeaderboard from '../src/utils/FetchLeaderboard';
 import saveResultToLocalStorage from '../src/utils/SaveResultToLocalStorage';
 import QuizScreen from './components/quiz-page/QuizPage';
 import ResultPage from './components/result-page/ResultPage';
@@ -16,15 +15,12 @@ function App() {
   const [showResult, setShowResult] = useState(false);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [score, setScore] = useState(0);
-  // const [leaderboard, setLeaderboard] = useState([]);
 
   useEffect(() => {
     fetchQuestion()
       .then((data) => setQuestions(data))
       .catch((e) => console.log(e));
   }, []);
-
-  useEffect(() => {}, []);
 
   const handleStartQuiz = (userName) => {
     setName(userName);
@@ -34,7 +30,6 @@ function App() {
   const handleShowResult = (userScore) => {
     setShowResult(true);
     setScore(userScore);
-    saveResultToLocalStorage(name, userScore);
   };
 
   const handleRestartButton = () => {
@@ -43,6 +38,11 @@ function App() {
     setQuizStarted(false);
     setShowResult(false);
     setShowLeaderboard(false);
+  };
+
+  const handleLeaderboardButton = () => {
+    setShowLeaderboard(true);
+    saveResultToLocalStorage(name, score);
   };
 
   if (!quizStarted) {
@@ -54,7 +54,7 @@ function App() {
       <ResultPage
         name={name}
         score={score}
-        handleLeaderboardButton={() => setShowLeaderboard(true)}
+        handleLeaderboardButton={handleLeaderboardButton}
       />
     );
   } else {

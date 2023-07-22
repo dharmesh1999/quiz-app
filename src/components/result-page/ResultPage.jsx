@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Container, Alert, Button } from 'react-bootstrap';
-import saveResultToLocalStorage from '../../utils/SaveResultToLocalStorage';
 
 const ResultPage = ({ name, score, handleLeaderboardButton }) => {
   return (
